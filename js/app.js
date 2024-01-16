@@ -232,6 +232,8 @@ $(document).ready(function(){
     clearTimeout(movingTimer);
     movingTimer = setTimeout(focusRect, doneMovingInterval, box.polyid);
   }
+
+ 
   
   function getPrevAndFill(){
     var box = getPrevtBB(selectedBox);
@@ -241,6 +243,8 @@ $(document).ready(function(){
   }
   
   $('#nextBB').on('click', getNextAndFill);
+
+  $('#deleteBB').on('click', deleteCurrent);
   
   
   $('#previousBB').on('click', getPrevAndFill);
@@ -398,6 +402,18 @@ $(document).ready(function(){
       return boxdata[el]
     }
     return boxdata[el + 1];
+  }
+
+  function deleteCurrent(){
+    let index = boxdata.findIndex(function(x){
+      return x.polyid == selectedBox.polyid;
+    });
+
+    if (index > -1) { // only splice array when item is found
+      boxdata.splice(index, 1); // 2nd parameter means remove one item only
+    }
+
+    getNextAndFill();
   }
   
   function fillAndFocusRect(box){
